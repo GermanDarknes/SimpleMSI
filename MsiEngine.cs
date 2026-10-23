@@ -187,7 +187,8 @@ public class MsiEngine(PrintContext print = default)
             _msi.Add(
                 new EnvironmentVariable(@var.Name, @var.Value.Replace("@", "[INSTALLDIR]"))
                 {
-                    Part = part
+                    Part = part,
+                    System = scope == InstallScope.perMachine
                 }
             );
         }
