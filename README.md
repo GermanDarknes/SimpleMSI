@@ -331,6 +331,47 @@ signtool_location = "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.22621.
 # The provided example selects the machine store instead of the user certificate store.
 extra_arguments = "/sm"
 
+# Additional Content Installation information
+# This is where you define what additional content files to install
+[[install.additional_content]]
+
+# The additional content directory.
+# You can use common variables like %ProgramFiles% or %LocalAppData%.
+install_dir = "%AppData%\\ExampleApp"
+
+# Installation source files.
+# These files will be directly packaged.
+source_files = [".\\readme.txt", ".\\config\\default.cfg"]
+
+# Installation source directories.
+# These are the directories where your application files to be packaged are taken from.
+# This must contain a wildcard to include all files automatically.
+source_dirs = [".\\appdata\\*.*"]
+
+# Whether to include files in subdirectories of the source_dirs.
+# The default is true.
+source_dirs_are_recursive = true
+
+# since you may want to add multiple additional content installations, through the magic of TOML table arrays, you can define another one here.
+[[install.additional_content]]
+
+# The additional content directory.
+# You can use common variables like %ProgramFiles% or %LocalAppData%.
+install_dir = "%LocalAppData%\\ExampleApp"
+
+# Installation source files.
+# These files will be directly packaged.
+source_files = [".\\readme.txt", ".\\config\\default.cfg"]
+
+# Installation source directories.
+# These are the directories where your application files to be packaged are taken from.
+# This must contain a wildcard to include all files automatically.
+source_dirs = [".\\localappdata\\*.*"]
+
+# Whether to include files in subdirectories of the source_dirs.
+# The default is true.
+source_dirs_are_recursive = true
+
 # Environment variables to set during installation.
 [[install.env_vars]]
 

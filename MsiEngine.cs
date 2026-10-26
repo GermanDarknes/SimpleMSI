@@ -116,6 +116,20 @@ public class MsiEngine(PrintContext print = default)
             MajorUpgrade = upgrade
         };
 
+        print.VerboseLine("Configuring additional content...");
+        foreach (var additionalContent in config.Installation?.AdditionalContent ?? [])
+        {
+            var additionalInstallDestination = additionalContent.Destination;
+            var additionalInstallFiles = (additionalContent.Files ?? []).Select(f => (new WixSharp.File(f)) as WixEntity);
+            var additionalInstallDirs = (additionalContent.Dirs ?? []).Select(d =>
+            {
+                bool recursive = config.Installation?.DirsRecursive != false;
+                return (recursive ? new Files(d) as WixEntity : new DirFiles(d));
+            });
+
+            _msi.AddDir(new Dir(additionalInstallDestination, additionalInstallFiles.Concat(additionalInstallDirs).ToArray()));
+        }
+
         _msi.ResolveWildCards();
 
         print.VerboseLine("Configuring code signing...");

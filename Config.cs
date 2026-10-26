@@ -174,6 +174,36 @@ public class Config
         public bool? DirsRecursive { get; set; }
 
         /// <summary>
+        /// Configuration for additional content.
+        /// </summary>
+        [JsonPropertyName("additional_content")]
+        public List<AdditionalContentConfig> AdditionalContent { get; set; } = [];
+        public class AdditionalContentConfig
+        {
+            /// <summary>
+            /// Target installation directory for additional content. May contain environment variables like %ProgramFiles% or %LocalAppData%.
+            /// </summary>
+            [JsonPropertyName("install_dir")]
+            [JsonRequired]
+            public string Destination { get; set; } = "";
+
+            /// <summary>
+            /// Single files to be included in the additional content installation.
+            /// </summary>
+            [JsonPropertyName("source_files")]
+            public List<string> Files { get; set; } = [];
+
+            /// <summary>
+            /// Directories to be included in the additional content installation. Must contain a wildcard in the form of <c>*.*</c> as the filename/>
+            /// </summary>
+            [JsonPropertyName("source_dirs")]
+            public List<string> Dirs { get; set; } = [];
+
+            [JsonPropertyName("source_dirs_are_recursive")]
+            public bool? DirsRecursive { get; set; }
+        }
+
+        /// <summary>
         /// Configuration for code signing the MSI and installed files.
         /// </summary>
         [JsonPropertyName("signing")]
